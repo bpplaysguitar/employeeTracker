@@ -38,7 +38,7 @@ const initialPrompt = [
 const viewAllEmployees = () => {
   connection.query(
   `SELECT first_name, last_name, title FROM employee
-    LEFT JOIN role ON employee.role_id = role.id;
+    LEFT JOIN role ON employee.employee_role_id = role.role_id;
     `, (err, res) => {
     if (err) throw err;
     console.table(res);
@@ -181,10 +181,30 @@ function updateEmployeeRole() {
         console.table(res);
         inquirer.prompt([{
             type: "input",
-            message: "Please enter employee ID of employee to update",
+            message: "Please enter employee ID of employee to update.",
             name: "employeeToUpdateId",
-        },])
-        // mainMenu();
+        },
+        {
+            type: "input",
+            message: "Please enter the role ID of the new role.",
+            name: "updatedRoleId",
+        }])
+        .then((res) => {
+            let employeeToUpdateId = res.employeeToUpdateId;
+            let updatedRoleId = res.updatedRoleId;
+            connection.query(`
+            UPDATE employee
+            SET employee_role_id = ${updatedRoleId} WHERE employee_id = ${employeeToUpdateId};`,
+              (err, res) => {
+                if (err) throw err;
+                console.log(
+                  `Employee role has been updated.`
+                );
+              }
+            );
+            // Return to the main menu
+            mainMenu();
+          });
       });
 };
   
