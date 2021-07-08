@@ -1,19 +1,21 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
+require('dotenv').config();
 
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: process.env.DB_HOST,
 
   // Your port; if not 3306
   port: 3306,
 
   // Your username
-  user: "root",
+  user: process.env.DB_USER,
 
   // Be sure to update with your own MySQL password!
-  password: "rootroot",
-  database: "employeeDB",
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
+
 });
 
 const initialPrompt = [
@@ -96,7 +98,7 @@ function addEmployee() {
       let employeeManagerId = res.employeeManagerId;
 
       connection.query(
-        `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${employeeFirstName}', '${employeeLastName}', ${employeeRoleId}, '${employeeManagerId}');`,
+        `INSERT INTO employee (first_name, last_name, employee_role_id, manager_id) VALUES ('${employeeFirstName}', '${employeeLastName}', ${employeeRoleId}, '${employeeManagerId}');`,
         (err, res) => {
           if (err) throw err;
           console.log(
