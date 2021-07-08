@@ -37,47 +37,6 @@ const removeEmployeePrompt =
 },
 ]
 
-// TODO: Create a function to initialize app
-function init() {
-    inquirer.prompt(initialPrompt)
-  .then((res) => {
-    res.role = "Manager";
-    employeeData += create.employee(res);
-    if (res.conStop === 'Continue') {
-      employeeFunction();
-    } else {
-      const fileName = "./dist/index.html"
-      
-      fs.writeFile(
-        fileName,
-        generate.HTML(employeeData),
-        err => err ? console.error(err) : console.log("Team profiles successfully generated."));
-
-    }
-
-
-
-  })
-
-}
-
-      function employeeFunction() {
-        inquirer.prompt(employeePrompt).then((res) => {
-            if (res.askAgain) {
-                employeeData += create.employee(res);
-                employeeFunction();
-            } else {
-                employeeData += create.employee(res);
-                const fileName = "./dist/index.html";
-    
-                fs.writeFile(
-                    fileName,
-                    generate.HTML(employeeData),
-                    err => err ? console.error(err) : console.log("Team profiles successfully generated."));
-            }
-        })
-    };
-
 
 // Function call to initialize app
 init();
