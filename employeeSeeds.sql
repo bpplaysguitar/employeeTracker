@@ -16,11 +16,11 @@ VALUES  ("management"),
 
 
 CREATE TABLE role (
-  id INT NOT NULL AUTO_INCREMENT,
+  role_id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(30),
   salary DECIMAL,
   department_id INT,
-  PRIMARY KEY (id)
+  PRIMARY KEY (role_id)
 );
 
 INSERT INTO role (title, salary, department_id)
@@ -30,15 +30,15 @@ VALUES  ("Team Principal", 8000000.00, 1),
 
 
 CREATE TABLE employee (
-  id INT NOT NULL AUTO_INCREMENT,
+  employee_id INT NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(30),
   last_name VARCHAR(30),
-  role_id INT NOT NULL,
+  employee_role_id INT NOT NULL,
   manager_id INT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (employee_id)
 );
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, employee_role_id, manager_id)
 VALUES 	("Christian", "Horner", 1, null),
         ("Toto", "Wolff", 1, null),
         ("Guenther", "Steiner", 1, null),

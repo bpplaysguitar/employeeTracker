@@ -174,12 +174,17 @@ function addRole() {
 
 // Update employee role
 function updateEmployeeRole() {
-    connection.query(`SELECT * FROM employee
-    LEFT JOIN role ON employee.role_id = role.id;
+    connection.query(`SELECT employee_id, first_name, last_name, title, role_id FROM employee
+    LEFT JOIN role ON role.role_id = employee.employee_role_id;
     `, (err, res) => {
         if (err) throw err;
         console.table(res);
-        mainMenu();
+        inquirer.prompt([{
+            type: "input",
+            message: "Please enter employee ID of employee to update",
+            name: "employeeToUpdateId",
+        },])
+        // mainMenu();
       });
 };
   
