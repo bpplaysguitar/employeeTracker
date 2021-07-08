@@ -28,7 +28,7 @@ const initialPrompt =
 ]
 
 // Show all employees
-const selectAllEmployees = () => {
+const viewAllEmployees = () => {
   connection.query('SELECT * FROM employee', (err, res) => {
     if (err) throw err;
     console.log(res);
@@ -40,44 +40,89 @@ const selectAllEmployees = () => {
 // Add employee 
 function addEmployee() {
   inquirer.prompt([
-      {
-          message: "Please enter employee's first name",
+      {   
+          type: 'input',
+          message: "Please enter employee's first name.",
           name: 'employeeFirstName',
       },
-      {
-          message: "Please enter employee's last name",
+      {   
+          type: 'input',
+          message: "Please enter employee's last name.",
           name: 'employeeLastName',
       },
       {
-          type: 'list',
-          message: "What is this employee's role?",
-          choices: ['Team Principal', 'Primary Driver', 'Reserve Driver'],
-          name: 'employeeRole',
+          type: 'input',
+          message: "What is the ID of the employee's role?",
+          name: 'employeeRoleId',
       },
-  ]).then(res => {
+      {
+          type: 'input',
+          message: "What is ID of the employee's manager?",
+          name: 'employeeManagerId',
+      },
+    ]).then(res => {
       let employeeFirstName = res.employeeFirstName;
       let employeeLastName = res.employeeLastName;
-      connection.query(`SELECT id FROM role WHERE title = '${res.employeeRole}';`, (err, res) => {
-          if (err) throw err;
-          connection.query(`INSERT INTO employee (first_name, last_name, role_id) VALUES ('${employeeFirstName}', '${employeeLastName}', ${res[0].id});`, (err, res) => {
+      let employeeRoleId = res.employeeRoleId;
+      let employeeManagerId = res.employeeManagerId;
+
+          connection.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${employeeFirstName}', '${employeeLastName}', ${employeeRoleId}, '${employeeManagerId}');`, (err, res) => {
               if (err) throw err;
               console.log(`${employeeFirstName} ${employeeLastName} was added as an employee.`);
-              // Show all employees 
-              selectAllEmployees();
           });
-      });
-  });
-};
+          // Return to the main menu 
+          mainMenu();
+        });
+    };
 
+    // Add department 
+function addDepartment() {
+    inquirer.prompt([
+        {   
+            type: 'input',
+            message: "Please enter department name.",
+            name: 'departmentName',
+        }
+      ]).then(res => {
+        let departmentName = res.departmentName;
+            connection.query(`INSERT INTO department (name) VALUES ('${departmentName}');`, (err, res) => {
+                if (err) throw err;
+                console.log(`Added ${departmentName} department.`);
+            });
+            // Return to the main menu 
+            mainMenu();
+          });
+      };
+
+    // Add role 
+function addRole() {
+    inquirer.prompt([
+        {   
+            type: 'input',
+            message: "Please enter role title.",
+            name: 'roleTitle',
+        }
+      ]).then(res => {
+        let roleTitle = res.roleTitle;
+            connection.query(`INSERT INTO role (title) VALUES ('${roleTitle}');`, (err, res) => {
+                if (err) throw err;
+                console.log(`Added ${roleTitle} as a role.`);
+            });
+            // Return to the main menu 
+            mainMenu();
+          });
+      };
 
 connection.connect((err) => {
   if (err) throw err;
   console.log(`connected as id ${connection.threadId}`);
-  // selectAllEmployees();
-  // addEmployee();
-  // First ask what the user wants to do
-  inquirer.prompt(initialPrompt)
+  // After connecting, run the main menu
+  mainMenu()
+})
 
+
+  function mainMenu() {
+  inquirer.prompt(initialPrompt)
   .then(res => {
     switch (res.whatToDo) {
         case 'View All Employees':
@@ -112,7 +157,5 @@ connection.connect((err) => {
             console.log("Exiting");
             connection.end();
     }
-})})
-
-
-'View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update Employee Role'
+})
+}
