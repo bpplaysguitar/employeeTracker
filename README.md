@@ -26,11 +26,12 @@
 
 
 ## Description
-This Note Taker app allows users to keep track of to-dos and other notes by entering them into the app and saving them to the list of notes on the left side of the page. Users can retrieve notes by clicking on them. The front end of this project was made by the boot camp, and I had to provide routing and a server for the back end.
+TODO
 
 ## Technologies Used
 JavaScript<br>
-Node.js
+Node.js<br>
+MySQL
       
       
 ## Installation

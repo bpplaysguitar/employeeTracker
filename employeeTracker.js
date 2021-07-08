@@ -36,7 +36,10 @@ const initialPrompt = [
 
 // View all employees
 const viewAllEmployees = () => {
-  connection.query("SELECT * FROM employee", (err, res) => {
+  connection.query(
+  `SELECT first_name, last_name, title FROM employee
+    LEFT JOIN role ON employee.role_id = role.id;
+    `, (err, res) => {
     if (err) throw err;
     console.table(res);
     mainMenu();
@@ -167,6 +170,20 @@ function addRole() {
       mainMenu();
     });
 }
+
+
+// Update employee role
+function updateEmployeeRole() {
+    connection.query(`SELECT * FROM employee
+    LEFT JOIN role ON employee.role_id = role.id;
+    `, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        mainMenu();
+      });
+};
+  
+
 
 connection.connect((err) => {
   if (err) throw err;
