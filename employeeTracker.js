@@ -39,7 +39,7 @@ const initialPrompt = [
 // View all employees
 const viewAllEmployees = () => {
   connection.query(
-  `SELECT first_name, last_name, title FROM employee
+  `SELECT employee_id, first_name, last_name, title, manager_id FROM employee
     LEFT JOIN role ON employee.employee_role_id = role.role_id;
     `, (err, res) => {
     if (err) throw err;
@@ -146,12 +146,12 @@ function addRole() {
       },
       {
         type: "input",
-        message: "Please salary for this role.",
+        message: "Please enter the salary for this role.",
         name: "roleSalary",
       },
       {
         type: "input",
-        message: "Please the department ID for this role.",
+        message: "Please enter the department ID for this role.",
         name: "roleDepartmentId",
       },
     ])

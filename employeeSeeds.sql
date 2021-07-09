@@ -11,8 +11,8 @@ CREATE TABLE department (
 );
 
 INSERT INTO department (name)
-VALUES  ("management"),
-		("drivers");
+VALUES  ("Management"),
+		("Race Talent");
 
 
 CREATE TABLE role (

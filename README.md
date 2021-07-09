@@ -26,7 +26,7 @@
 
 
 ## Description
-TODO
+This command line application helps organize employees, roles, and departments within a company. It uses MySQL, Node.js, and JavaScript to present the user with options to view or change things about their company.
 
 ## Technologies Used
 JavaScript<br>
@@ -52,7 +52,7 @@ git clone https://github.com/bpplaysguitar/employeeTracker.git,
 
 ## Usage
 Application in use
-![employeeTracker](/public/assets/images/employeeTracker.gif)
+![employeeTracker](/images/employeeTracker.gif)
 <br>
 
       
