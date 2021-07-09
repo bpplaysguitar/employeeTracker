@@ -52,7 +52,7 @@ git clone https://github.com/bpplaysguitar/employeeTracker.git,
 
 ## Usage
 Application in use
-![employeeTracker](/images/employeeTracker.gif)
+![employeeTracker](/images/employeeTrackerDemo.gif)
 <br>
 
       
